@@ -33,32 +33,42 @@ namespace STDEXEC
     return __std::coroutine_handle<_Tp>::from_address(__h.address());
   }
 
-  inline void __coroutine_resume_nothrow(__std::coroutine_handle<> __h) noexcept
+  STDEXEC_ATTRIBUTE(always_inline)
+  void __coroutine_resume_nothrow(void* __address) noexcept
   {
     STDEXEC_TRY
     {
-      STDEXEC_ASSERT(__h);
-      __h.resume();
+      __builtin_coro_resume(__address);
     }
     STDEXEC_CATCH_ALL
     {
-      STDEXEC_ASSERT(!"Coroutine resume threw an exception!");
       __std::unreachable();
     }
   }
 
-  inline void __coroutine_destroy_nothrow(__std::coroutine_handle<> __h) noexcept
+  STDEXEC_ATTRIBUTE(always_inline)
+  void __coroutine_resume_nothrow(__std::coroutine_handle<> __h) noexcept
+  {
+    STDEXEC::__coroutine_resume_nothrow(__h.address());
+  }
+
+  STDEXEC_ATTRIBUTE(always_inline)
+  void __coroutine_destroy_nothrow(void* __address) noexcept
   {
     STDEXEC_TRY
     {
-      STDEXEC_ASSERT(__h);
-      __h.destroy();
+      __builtin_coro_destroy(__address);
     }
     STDEXEC_CATCH_ALL
     {
-      STDEXEC_ASSERT(!"Coroutine destroy threw an exception!");
       __std::unreachable();
     }
+  }
+
+  STDEXEC_ATTRIBUTE(always_inline)
+  void __coroutine_destroy_nothrow(__std::coroutine_handle<> __h) noexcept
+  {
+    STDEXEC::__coroutine_destroy_nothrow(__h.address());
   }
 
   // A coroutine handle that also supports unhandled_stopped() for propagating stop
@@ -157,24 +167,19 @@ namespace STDEXEC
   {
     struct __synthetic_coro_frame
     {
-      void (*__resume_)(void*) noexcept;
-      // we never invoke __destroy_ so a no-op implementation is fine; we've chosen the
-      // address of a no-op function rather than nullptr in case some rogue awaitable
-      // *does* invoke destroy on the synthesized handle that it receives in its
-      // await_suspend function
-      void (*__destroy_)(void*) noexcept = &__noop_destroy;
+      using __callback_fn_t = void(void*) noexcept;
 
-      static void __noop_destroy(void*) noexcept
-      {
-        STDEXEC_ASSERT(!"Attempt to destroy a synthetic coroutine!");
-      }
+      __callback_fn_t* __resume_  = &__noop_fn;
+      __callback_fn_t* __destroy_ = &__noop_fn;
+
+      static void __noop_fn(void*) noexcept {}
     };
 
     static constexpr std::ptrdiff_t __coro_promise_offset = static_cast<std::ptrdiff_t>(
       sizeof(__synthetic_coro_frame));
   }  // namespace __detail
 
-#  if STDEXEC_MSVC() && STDEXEC_MSVC_VERSION <= 1939
+#  if STDEXEC_MSVC() && STDEXEC_MSVC_VERSION < 1950
   // MSVCBUG https://developercommunity.visualstudio.com/t/destroy-coroutine-from-final_suspend-r/10096047
 
   // Prior to Visual Studio 17.9 (Feb, 2024), aka MSVC 19.39, MSVC incorrectly allocates
@@ -192,17 +197,14 @@ namespace STDEXEC
 
   struct __destroy_and_continue_frame : __detail::__synthetic_coro_frame
   {
-    constexpr __destroy_and_continue_frame() noexcept
-      : __detail::__synthetic_coro_frame{&__destroy_and_continue_frame::__resume}
-    {}
-
     static void __resume(void* __address) noexcept
     {
       // Make a local copy of the promise to ensure we can safely destroy the suspended
       // coroutine after resuming the continuation.
       auto __promise = static_cast<__destroy_and_continue_frame*>(__address)->__promise_;
       STDEXEC::__coroutine_resume_nothrow(__promise.__continue_);
-      STDEXEC::__coroutine_destroy_nothrow(__promise.__destroy_);
+      STDEXEC_ATTRIBUTE(musttail)
+      return STDEXEC::__coroutine_destroy_nothrow(__promise.__destroy_.address());
     }
 
     struct __promise
@@ -210,24 +212,72 @@ namespace STDEXEC
       __std::coroutine_handle<> __destroy_{};
       __std::coroutine_handle<> __continue_{};
     } __promise_;
+
+    static thread_local __destroy_and_continue_frame value;
   };
+
+  inline thread_local __destroy_and_continue_frame __destroy_and_continue_frame::value{
+    {&__destroy_and_continue_frame::__resume},
+    {}};
+
+  struct __symmetric_transfer_frame : __detail::__synthetic_coro_frame
+  {
+    static void __resume(void* __address) noexcept
+    {
+      // Make a local copy of the promise to ensure we can safely destroy the suspended
+      // coroutine after resuming the continuation.
+      auto __promise = static_cast<__symmetric_transfer_frame*>(__address)->__promise_;
+      STDEXEC_ATTRIBUTE(musttail)
+      return STDEXEC::__coroutine_resume_nothrow(__promise.__continue_.address());
+    }
+
+    struct __promise
+    {
+      __std::coroutine_handle<> __continue_{};
+    } __promise_;
+
+    static thread_local __symmetric_transfer_frame value;
+  };
+
+  inline thread_local __symmetric_transfer_frame __symmetric_transfer_frame::value{
+    {&__symmetric_transfer_frame::__resume},
+    {}};
 
   inline auto __coroutine_destroy_and_continue(__std::coroutine_handle<> __destroy,            //
                                                __std::coroutine_handle<> __continue) noexcept  //
     -> __std::coroutine_handle<>
   {
-    static constinit thread_local __destroy_and_continue_frame __fr;
-    __fr.__promise_.__destroy_  = __destroy;
-    __fr.__promise_.__continue_ = __continue;
-    return __std::coroutine_handle<>::from_address(&__fr);
+    __destroy_and_continue_frame::value.__promise_.__destroy_  = __destroy;
+    __destroy_and_continue_frame::value.__promise_.__continue_ = __continue;
+    return __std::coroutine_handle<>::from_address(&__destroy_and_continue_frame::value);
   }
 
-#    define STDEXEC_CORO_DESTROY_AND_CONTINUE(__destroy, __continue)                      \
-       ::STDEXEC::__coroutine_destroy_and_continue(__destroy, __continue)
+  inline auto __coroutine_destroy_and_continue(__std::coroutine_handle<> __continue) noexcept  //
+    -> __std::coroutine_handle<>
+  {
+    __symmetric_transfer_frame::value.__promise_.__continue_ = __continue;
+    return __std::coroutine_handle<>::from_address(&__symmetric_transfer_frame::value);
+  }
+
 #  else
-#    define STDEXEC_CORO_DESTROY_AND_CONTINUE(__destroy, __continue)                      \
-       (__destroy.destroy(), __continue)
-#  endif
+
+  STDEXEC_ATTRIBUTE(always_inline)
+  auto __coroutine_destroy_and_continue(__std::coroutine_handle<> __destroy,            //
+                                        __std::coroutine_handle<> __continue) noexcept  //
+    -> __std::coroutine_handle<>
+  {
+    ::STDEXEC::__coroutine_destroy_nothrow(__destroy);
+    return __continue;
+  }
+
+  STDEXEC_ATTRIBUTE(always_inline)
+  auto __coroutine_destroy_and_continue(__std::coroutine_handle<> __continue) noexcept  //
+    -> __std::coroutine_handle<>
+  {
+    return __continue;
+  }
+
+#  endif  // STDEXEC_MSVC() && STDEXEC_MSVC_VERSION < 1950
 }  // namespace STDEXEC
 
 #endif  // !STDEXEC_NO_STDCPP_COROUTINES()

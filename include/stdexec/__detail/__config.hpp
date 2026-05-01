@@ -143,6 +143,13 @@
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(__has_cpp_attribute)
+#  define STDEXEC_HAS_CPP_ATTRIBUTE(...) __has_cpp_attribute(__VA_ARGS__)
+#else
+#  define STDEXEC_HAS_CPP_ATTRIBUTE(...) 0
+#endif
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 #if STDEXEC_CLANG() && STDEXEC_CUDA_COMPILATION()
 #  define STDEXEC_HOST_DEVICE_DEDUCTION_GUIDE __host__ __device__
 #else
@@ -321,7 +328,7 @@ namespace STDEXEC::__std
 #  define STDEXEC_ATTR_WHICH_4(_ATTR) __forceinline
 #elif STDEXEC_CLANG()
 #  define STDEXEC_ATTR_WHICH_4(_ATTR)                                                              \
-    inline //__attribute__((__always_inline__, __artificial__, __nodebug__)) inline
+    __attribute__((__always_inline__, __artificial__, __nodebug__)) inline
 #elif STDEXEC_GCC()
 #  define STDEXEC_ATTR_WHICH_4(_ATTR) __attribute__((__always_inline__, __artificial__)) inline
 #else
@@ -369,6 +376,16 @@ namespace STDEXEC::__std
 #endif
 #define STDEXEC_ATTR_noinline     STDEXEC_PP_PROBE(~, 9)
 #define STDEXEC_ATTR___noinline__ STDEXEC_PP_PROBE(~, 9)
+
+#if STDEXEC_MSVC() && !STDEXEC_CLANG_CL() && STDEXEC_MSVC_VERSION >= 1950
+#  define STDEXEC_ATTR_WHICH_10(_ATTR) [[msvc::musttail]]
+#elif STDEXEC_HAS_CPP_ATTRIBUTE(gnu::musttail)
+#  define STDEXEC_ATTR_WHICH_10(_ATTR) [[gnu::musttail]]
+#else
+#  define STDEXEC_ATTR_WHICH_10(_ATTR) /*nothing*/
+#endif
+#define STDEXEC_ATTR_musttail     STDEXEC_PP_PROBE(~, 10)
+#define STDEXEC_ATTR___musttail__ STDEXEC_PP_PROBE(~, 10)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // warning push/pop portability macros
