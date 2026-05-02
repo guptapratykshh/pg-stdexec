@@ -364,7 +364,6 @@ namespace STDEXEC
       {}
 
       auto await_suspend([[maybe_unused]] __std::coroutine_handle<> __continuation)
-        -> __std::coroutine_handle<>
       {
         STDEXEC_ASSERT(this->__continuation_.handle() == __continuation);
         {
@@ -374,7 +373,11 @@ namespace STDEXEC
           STDEXEC::start(__opstate);
         }
 
+#  if !defined(STDEXEC_MSVC_CORO_DESTROY_BUG_WORKAROUND)
         return this->__get_continuation();
+#  else
+        STDEXEC::__coroutine_resume_nothrow(this->__get_continuation());
+#  endif
       }
 
      private:
