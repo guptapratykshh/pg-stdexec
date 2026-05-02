@@ -135,7 +135,7 @@ namespace STDEXEC
         // as normal.
         if (__result_.__is_valueless())
         {
-          return __continuation_.unhandled_stopped();
+          return STDEXEC::__coroutine_unhandled_stopped(__continuation_);
         }
         else
         {
@@ -317,6 +317,7 @@ namespace STDEXEC
 
       STDEXEC_CONSTEXPR_CXX23 auto
       await_suspend([[maybe_unused]] __std::coroutine_handle<> __continuation) noexcept
+        -> __std::coroutine_handle<>
       {
         STDEXEC_ASSERT(this->__continuation_.handle() == __continuation);
 
@@ -334,12 +335,7 @@ namespace STDEXEC
 
         // If the receiver already cleared __thread_id_, it completed on the same thread.
         // Resume the continuation directly.
-#  if !defined(STDEXEC_MSVC_CORO_DESTROY_BUG_WORKAROUND)
         return __done ? this->__get_continuation() : __std::noop_coroutine();
-#  else
-        if (__done)
-          STDEXEC::__coroutine_resume_nothrow(this->__get_continuation());
-#  endif
       }
 
      private:
@@ -364,6 +360,7 @@ namespace STDEXEC
       {}
 
       auto await_suspend([[maybe_unused]] __std::coroutine_handle<> __continuation)
+        -> __std::coroutine_handle<>
       {
         STDEXEC_ASSERT(this->__continuation_.handle() == __continuation);
         {
@@ -373,11 +370,7 @@ namespace STDEXEC
           STDEXEC::start(__opstate);
         }
 
-#  if !defined(STDEXEC_MSVC_CORO_DESTROY_BUG_WORKAROUND)
         return this->__get_continuation();
-#  else
-        STDEXEC::__coroutine_resume_nothrow(this->__get_continuation());
-#  endif
       }
 
      private:
