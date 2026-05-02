@@ -24,6 +24,10 @@
 
 #if !STDEXEC_NO_STDCPP_COROUTINES()
 
+#  if STDEXEC_MSVC() && STDEXEC_MSVC_VERSION < 1950
+#    define STDEXEC_MSVC_CORO_DESTROY_BUG_WORKAROUND
+#  endif
+
 namespace STDEXEC
 {
   template <class _Tp, __one_of<_Tp, void> _Up>
@@ -179,7 +183,7 @@ namespace STDEXEC
       sizeof(__synthetic_coro_frame));
   }  // namespace __detail
 
-#  if STDEXEC_MSVC() && STDEXEC_MSVC_VERSION < 1950
+#  if defined(STDEXEC_MSVC_CORO_DESTROY_BUG_WORKAROUND)
   // MSVCBUG https://developercommunity.visualstudio.com/t/destroy-coroutine-from-final_suspend-r/10096047
 
   // Prior to Visual Studio 17.9 (Feb, 2024), aka MSVC 19.39, MSVC incorrectly allocates
@@ -189,8 +193,8 @@ namespace STDEXEC
   // implementation when NRVO is in play.
 
   // This workaround delays the destruction of the suspended coroutine by wrapping the
-  // continuation in another "synthetic" coroutine the resumes the continuation and *then*
-  // destroys the suspended coroutine.
+  // continuation in another "synthetic" coroutine that resumes the continuation and
+  // *then* destroys the suspended coroutine.
 
   // The wrapping coroutine frame is thread-local and reused within the thread for each
   // destroy-and-continue sequence.
@@ -201,10 +205,10 @@ namespace STDEXEC
     {
       // Make a local copy of the promise to ensure we can safely destroy the suspended
       // coroutine after resuming the continuation.
-      auto __promise = static_cast<__destroy_and_continue_frame*>(__address)->__promise_;
-      STDEXEC::__coroutine_resume_nothrow(__promise.__continue_);
-      STDEXEC_ATTRIBUTE(musttail)
-      return STDEXEC::__coroutine_destroy_nothrow(__promise.__destroy_.address());
+      auto& __self    = *static_cast<__destroy_and_continue_frame*>(__address);
+      auto  __destroy = __self.__promise_.__destroy_;
+      STDEXEC::__coroutine_resume_nothrow(__self.__promise_.__continue_);
+      STDEXEC::__coroutine_destroy_nothrow(__destroy);
     }
 
     struct __promise
@@ -220,29 +224,6 @@ namespace STDEXEC
     {&__destroy_and_continue_frame::__resume},
     {}};
 
-  struct __symmetric_transfer_frame : __detail::__synthetic_coro_frame
-  {
-    static void __resume(void* __address) noexcept
-    {
-      // Make a local copy of the promise to ensure we can safely destroy the suspended
-      // coroutine after resuming the continuation.
-      auto __promise = static_cast<__symmetric_transfer_frame*>(__address)->__promise_;
-      STDEXEC_ATTRIBUTE(musttail)
-      return STDEXEC::__coroutine_resume_nothrow(__promise.__continue_.address());
-    }
-
-    struct __promise
-    {
-      __std::coroutine_handle<> __continue_{};
-    } __promise_;
-
-    static thread_local __symmetric_transfer_frame value;
-  };
-
-  inline thread_local __symmetric_transfer_frame __symmetric_transfer_frame::value{
-    {&__symmetric_transfer_frame::__resume},
-    {}};
-
   inline auto __coroutine_destroy_and_continue(__std::coroutine_handle<> __destroy,            //
                                                __std::coroutine_handle<> __continue) noexcept  //
     -> __std::coroutine_handle<>
@@ -250,13 +231,6 @@ namespace STDEXEC
     __destroy_and_continue_frame::value.__promise_.__destroy_  = __destroy;
     __destroy_and_continue_frame::value.__promise_.__continue_ = __continue;
     return __std::coroutine_handle<>::from_address(&__destroy_and_continue_frame::value);
-  }
-
-  inline auto __coroutine_destroy_and_continue(__std::coroutine_handle<> __continue) noexcept  //
-    -> __std::coroutine_handle<>
-  {
-    __symmetric_transfer_frame::value.__promise_.__continue_ = __continue;
-    return __std::coroutine_handle<>::from_address(&__symmetric_transfer_frame::value);
   }
 
 #  else
@@ -270,14 +244,8 @@ namespace STDEXEC
     return __continue;
   }
 
-  STDEXEC_ATTRIBUTE(always_inline)
-  auto __coroutine_destroy_and_continue(__std::coroutine_handle<> __continue) noexcept  //
-    -> __std::coroutine_handle<>
-  {
-    return __continue;
-  }
+#  endif  // !defined(STDEXEC_MSVC_CORO_DESTROY_BUG_WORKAROUND)
 
-#  endif  // STDEXEC_MSVC() && STDEXEC_MSVC_VERSION < 1950
 }  // namespace STDEXEC
 
 #endif  // !STDEXEC_NO_STDCPP_COROUTINES()
