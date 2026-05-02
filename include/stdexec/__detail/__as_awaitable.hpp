@@ -135,7 +135,7 @@ namespace STDEXEC
         // as normal.
         if (__result_.__is_valueless())
         {
-          return __continuation_.unhandled_stopped();
+          return STDEXEC::__coroutine_unhandled_stopped(__continuation_);
         }
         else
         {
@@ -317,28 +317,30 @@ namespace STDEXEC
 
       STDEXEC_CONSTEXPR_CXX23 auto
       await_suspend([[maybe_unused]] __std::coroutine_handle<> __continuation) noexcept
+        -> __std::coroutine_handle<>
       {
         STDEXEC_ASSERT(this->__continuation_.handle() == __continuation);
 
         // Start the operation.
         STDEXEC::start(__opstate_);
 
-        // This exchange({}) is T1's last write to the frame. After this point:
-        //  - If T2 is spinning waiting for our exchange, it will observe {} and
-        //    proceed to resume().
-        //  - If T2 hasn't run yet, it will see {} from its load in __done() and
-        //    skip the spin entirely
+        // We need to do two things:
+        // 1) Check if we already completed inline (receiver wrote {} to __thread_id_)
+        // In that case, the receiver has already returned and we can just resume the continuation
+        // 2) Otherwise, we need signal to the (potentially spin-waiting) receiver that we are
+        // finished and won't access the frame anymore.
+        // We do this with an exchange({}), except on buggy MSVC versions, where we have to delay
+        // the signaling until we exited this function.
+#  if !defined(STDEXEC_MSVC_CORO_DESTROY_BUG_WORKAROUND)
         bool const __done =  //
           this->__thread_id_.exchange(std::thread::id{}, __std::memory_order_release)
           == std::thread::id{};
-
-        // If the receiver already cleared __thread_id_, it completed on the same thread.
-        // Resume the continuation directly.
-#  if !defined(STDEXEC_MSVC_CORO_DESTROY_BUG_WORKAROUND)
         return __done ? this->__get_continuation() : __std::noop_coroutine();
 #  else
-        if (__done)
-          STDEXEC::__coroutine_resume_nothrow(this->__get_continuation());
+        bool const __done =  //
+          this->__thread_id_.load(__std::memory_order_relaxed) == std::thread::id{};
+        return __done ? this->__get_continuation()
+                      : __coroutine_signal_completion(this->__thread_id_);
 #  endif
       }
 

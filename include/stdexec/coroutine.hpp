@@ -15,12 +15,14 @@
  */
 #pragma once
 
+#include "__detail/__atomic.hpp"
 #include "__detail/__awaitable.hpp"  // IWYU pragma: export
 #include "__detail/__concepts.hpp"
 #include "__detail/__config.hpp"
 #include "__detail/__utility.hpp"
 
 #include <exception>
+#include <thread>
 
 #if !STDEXEC_NO_STDCPP_COROUTINES()
 
@@ -224,6 +226,49 @@ namespace STDEXEC
     {&__destroy_and_continue_frame::__resume},
     {}};
 
+  struct __unhandled_stopped_frame : __detail::__synthetic_coro_frame
+  {
+    static void __resume(void* __address) noexcept
+    {
+      // Make a local copy of the promise since it will go away once we call through
+      // the __unhandled_stopped_fn_ function pointer.
+      auto& __self = *static_cast<__unhandled_stopped_frame*>(__address);
+      STDEXEC::__coroutine_resume_nothrow(__self.__promise_.__coro_.unhandled_stopped());
+    }
+
+    struct __promise
+    {
+      __coroutine_handle<> __coro_;
+    } __promise_;
+
+    static thread_local __unhandled_stopped_frame value;
+  };
+
+  inline thread_local __unhandled_stopped_frame __unhandled_stopped_frame::value{
+    {&__unhandled_stopped_frame::__resume},
+    {}};
+
+  struct __signal_completion_frame : __detail::__synthetic_coro_frame
+  {
+    static void __resume(void* __address) noexcept
+    {
+      auto& __self = *static_cast<__signal_completion_frame*>(__address);
+      STDEXEC_ASSERT(__self.__promise_.__thread_id_ != nullptr);
+      __self.__promise_.__thread_id_->store({}, __std::memory_order_release);
+    }
+
+    struct __promise
+    {
+      __std::atomic<std::thread::id>* __thread_id_;
+    } __promise_;
+
+    static thread_local __signal_completion_frame value;
+  };
+
+  inline thread_local __signal_completion_frame __signal_completion_frame::value{
+    {&__signal_completion_frame::__resume},
+    nullptr};
+
   inline auto __coroutine_destroy_and_continue(__std::coroutine_handle<> __destroy,            //
                                                __std::coroutine_handle<> __continue) noexcept  //
     -> __std::coroutine_handle<>
@@ -231,6 +276,21 @@ namespace STDEXEC
     __destroy_and_continue_frame::value.__promise_.__destroy_  = __destroy;
     __destroy_and_continue_frame::value.__promise_.__continue_ = __continue;
     return __std::coroutine_handle<>::from_address(&__destroy_and_continue_frame::value);
+  }
+
+  inline auto __coroutine_unhandled_stopped(__coroutine_handle<> __coro) noexcept  //
+    -> __std::coroutine_handle<>
+  {
+    __unhandled_stopped_frame::value.__promise_.__coro_ = __coro;
+    return __std::coroutine_handle<>::from_address(&__unhandled_stopped_frame::value);
+  }
+
+  inline auto
+  __coroutine_signal_completion(__std::atomic<std::thread::id>& __thread_id_) noexcept  //
+    -> __std::coroutine_handle<>
+  {
+    __signal_completion_frame::value.__promise_.__thread_id_ = &__thread_id_;
+    return __std::coroutine_handle<>::from_address(&__signal_completion_frame::value);
   }
 
 #  else
@@ -244,6 +304,20 @@ namespace STDEXEC
     return __continue;
   }
 
+  STDEXEC_ATTRIBUTE(always_inline)
+  auto __coroutine_unhandled_stopped(__coroutine_handle<> __coro) noexcept  //
+    -> __std::coroutine_handle<>
+  {
+    return __coro.unhandled_stopped();
+  }
+
+  STDEXEC_ATTRIBUTE(always_inline)
+  auto __coroutine_signal_completion(__std::atomic<std::thread::id>& __thread_id_) noexcept  //
+    -> __std::coroutine_handle<>
+  {
+    __thread_id_.store({}, __std::memory_order_release);
+    return __std::noop_coroutine();
+  }
 #  endif  // !defined(STDEXEC_MSVC_CORO_DESTROY_BUG_WORKAROUND)
 
 }  // namespace STDEXEC
