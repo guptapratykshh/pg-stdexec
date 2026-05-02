@@ -505,6 +505,25 @@ namespace
     ex::sync_wait(scope.join());
   }
 
+  auto await_always_inline_value_sender_loop() -> ex::task<void>
+  {
+    for (size_t i = 0; i < 10000; ++i)
+    {
+      co_await ex::just();
+    }
+  }
+
+  TEST_CASE("repro for NVIDIA/stdexec#2047 no stack overflow", "[types][task]")
+  {
+    auto pool = exec::static_thread_pool(1);
+
+    auto scope = ex::counting_scope();
+    ex::spawn(ex::starts_on(pool.get_scheduler(), await_always_inline_value_sender_loop())
+                | ex::upon_error([](auto) noexcept { std::terminate(); }),
+              scope.get_token());
+    ex::sync_wait(scope.join());
+  }
+
   // TODO: add tests for stop token support in task
 
 }  // anonymous namespace
