@@ -34,7 +34,8 @@
 #include <optional>
 #include <span>
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_MSVC(4702)  // warning C4702: unreachable code
 STDEXEC_PRAGMA_IGNORE_GNU("-Warray-bounds")
 
@@ -409,4 +410,4 @@ namespace STDEXEC
   }  // namespace __detail
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

@@ -29,6 +29,8 @@
 #include "__utility.hpp"
 #include "__variant.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __final
@@ -410,3 +412,5 @@ namespace STDEXEC
     }
   };
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

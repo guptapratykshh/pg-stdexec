@@ -26,6 +26,8 @@
 #include <cstdint>
 #include <type_traits>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   //////////////////////////////////////////////////////////////////////////////////////////
@@ -247,3 +249,5 @@ namespace STDEXEC
 #endif  // !defined(STDEXEC_DOXYGEN_INVOKED)
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

@@ -30,6 +30,8 @@
 #include <tuple>
 #include <variant>  // IWYU pragma: keep
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -128,3 +130,5 @@ namespace STDEXEC
   struct __sexpr_impl<into_variant_t> : __into_variant::__into_variant_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

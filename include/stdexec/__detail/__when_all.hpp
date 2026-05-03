@@ -40,6 +40,8 @@
 #include "__atomic.hpp"
 #include <exception>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -642,3 +644,5 @@ namespace STDEXEC
     : __when_all::__transfer_when_all_with_variant_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

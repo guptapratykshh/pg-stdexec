@@ -22,6 +22,8 @@
 #include "__env.hpp"
 #include "__get_completion_signatures.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   // A wrapper around a sender to be used when an adaptor with a sender transform wants to
@@ -86,3 +88,5 @@ namespace STDEXEC
   template <class _Sender>
   STDEXEC_HOST_DEVICE_DEDUCTION_GUIDE __sender_ref(_Sender&) -> __sender_ref<_Sender>;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

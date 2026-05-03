@@ -30,6 +30,8 @@
 #include <optional>
 #include <utility>
 
+#include "__prologue.hpp"
+
 #if defined(STDEXEC_SYSTEM_CONTEXT_SCHEDULE_OP_SIZE)                                               \
   || defined(STDEXEC_SYSTEM_CONTEXT_SCHEDULE_OP_ALIGN)                                             \
   || defined(STDEXEC_SYSTEM_CONTEXT_BULK_SCHEDULE_OP_SIZE)                                         \
@@ -781,6 +783,8 @@ namespace STDEXEC
     }
   }
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"
 
 #if defined(STDEXEC_PARALLEL_SCHEDULER_HEADER_ONLY)
 #  define STDEXEC_PARALLEL_SCHEDULER_INLINE inline

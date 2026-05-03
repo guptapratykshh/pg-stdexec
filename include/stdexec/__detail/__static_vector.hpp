@@ -23,6 +23,8 @@
 #include <cstddef>
 #include <initializer_list>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   template <class _Tp, std::size_t _Capacity>
@@ -204,3 +206,5 @@ namespace STDEXEC
     return __static_vector<_First, 1 + sizeof...(_Rest)>{__first, __rest...};
   }
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

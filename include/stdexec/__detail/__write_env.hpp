@@ -23,6 +23,8 @@
 #include "__queries.hpp"
 #include "__sender_adaptor_closure.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,3 +79,5 @@ namespace STDEXEC
   struct __sexpr_impl<__write_env_t> : __write::__write_env_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

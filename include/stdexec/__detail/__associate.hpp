@@ -36,6 +36,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -285,3 +287,5 @@ namespace STDEXEC
   struct __sexpr_impl<associate_t> : __associate::__associate_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

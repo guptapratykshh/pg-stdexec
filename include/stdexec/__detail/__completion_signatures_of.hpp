@@ -22,6 +22,8 @@
 #include "__get_completion_signatures.hpp"
 #include "__sender_concepts.hpp"  // IWYU pragma: export
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
 #if STDEXEC_ENABLE_EXTRA_TYPE_CHECKING()
@@ -47,3 +49,5 @@ namespace STDEXEC
   using completion_signatures_of_t = __completion_signatures_of_t<_CvSender, _Env...>;
 #endif
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

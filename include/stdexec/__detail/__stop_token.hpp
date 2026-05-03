@@ -24,6 +24,8 @@
 #  include <stop_token>  // IWYU pragma: export
 #endif
 
+#include "__prologue.hpp"
+
 // This shouldn't be necessary, but some standard library implementations claim support
 // for jthread but don't actually provide std::stop_token.
 STDEXEC_NAMESPACE_STD_BEGIN
@@ -117,3 +119,5 @@ namespace STDEXEC
   STDEXEC_P2300_DEPRECATED_SYMBOL(std::unstoppable_token)
   STDEXEC_P2300_DEPRECATED_SYMBOL(std::never_stop_token)
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

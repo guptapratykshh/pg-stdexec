@@ -21,6 +21,8 @@
 
 #  include <ranges>
 
+#  include "__prologue.hpp"
+
 namespace STDEXEC::ranges
 {
   using std::ranges::begin;
@@ -32,9 +34,13 @@ namespace STDEXEC::ranges
   using std::ranges::sentinel_t;
 }  // namespace STDEXEC::ranges
 
+#  include "__epilogue.hpp"
+
 #else
 
 #  include <iterator>
+
+#  include "__prologue.hpp"
 
 namespace STDEXEC::ranges
 {
@@ -115,5 +121,7 @@ namespace STDEXEC::ranges
   using range_value_t = std::iterator_traits<iterator_t<_Range>>::value_type;
 
 }  // namespace STDEXEC::ranges
+
+#  include "__epilogue.hpp"
 
 #endif

@@ -28,6 +28,8 @@
 
 #include <exception>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __cmplsigs
@@ -655,3 +657,5 @@ namespace STDEXEC
                                           _ErrorTransform,
                                           _StoppedSigs>;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

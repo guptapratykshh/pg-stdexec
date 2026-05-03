@@ -30,6 +30,8 @@
 
 #include <algorithm>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __detail
@@ -435,3 +437,5 @@ namespace STDEXEC
     }
   }
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

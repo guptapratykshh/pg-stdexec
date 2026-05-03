@@ -27,6 +27,8 @@
 #include <new>  // IWYU pragma: keep for ::new
 #include <utility>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __opt
@@ -253,3 +255,5 @@ namespace STDEXEC
   using __opt::__bad_optional_access;
   using __opt::__nullopt;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

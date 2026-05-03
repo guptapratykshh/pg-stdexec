@@ -28,6 +28,8 @@
 #include "__type_traits.hpp"
 #include "__utility.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   // scheduler concept opt-in tag
@@ -566,3 +568,5 @@ namespace STDEXEC
                                                               "renamed get_delegation_scheduler")]]
   = get_delegation_scheduler;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

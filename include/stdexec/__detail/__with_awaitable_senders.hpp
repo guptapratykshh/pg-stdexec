@@ -21,6 +21,8 @@
 #include "__as_awaitable.hpp"
 #include "__concepts.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
 #if !STDEXEC_NO_STDCPP_COROUTINES()
@@ -84,3 +86,5 @@ namespace STDEXEC
   };
 #endif
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

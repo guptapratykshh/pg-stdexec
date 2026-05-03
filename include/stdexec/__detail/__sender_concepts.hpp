@@ -27,6 +27,8 @@
 #include "__receivers.hpp"
 #include "__type_traits.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -183,3 +185,5 @@ namespace STDEXEC
                                                        _Env...>();
   }
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

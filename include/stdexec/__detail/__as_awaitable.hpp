@@ -35,7 +35,8 @@
 #include <system_error>
 #include <thread>
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wmissing-braces")
 STDEXEC_PRAGMA_IGNORE_MSVC(4714)  // marked as __forceinline not inlined
 
@@ -476,4 +477,4 @@ namespace STDEXEC
 #endif
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

@@ -22,6 +22,8 @@
 #include "__senders.hpp"
 #include "__unstoppable.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   struct _CANNOT_MAKE_SENDER_AFFINE_TO_THE_STARTING_SCHEDULER_;
@@ -166,3 +168,5 @@ namespace STDEXEC
     };
   };
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

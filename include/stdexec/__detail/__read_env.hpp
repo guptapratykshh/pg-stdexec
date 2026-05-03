@@ -34,6 +34,8 @@
 
 #include <exception>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __read_env
@@ -187,3 +189,5 @@ STDEXEC_P2300_NAMESPACE_BEGIN()
     return STDEXEC::read_env(get_stop_token);
   }
 STDEXEC_P2300_NAMESPACE_END()
+
+#include "__epilogue.hpp"

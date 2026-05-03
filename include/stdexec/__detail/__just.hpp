@@ -25,7 +25,8 @@
 #include "__sender_introspection.hpp"
 #include "__type_traits.hpp"
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wmissing-braces")
 
 namespace STDEXEC
@@ -137,4 +138,4 @@ namespace STDEXEC
   inline constexpr just_stopped_t just_stopped{};
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

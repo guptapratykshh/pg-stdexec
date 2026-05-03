@@ -22,6 +22,8 @@
 #include <cstddef>
 #include <utility>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __queue
@@ -295,3 +297,5 @@ namespace STDEXEC
   using __queue::__intrusive_queue;
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

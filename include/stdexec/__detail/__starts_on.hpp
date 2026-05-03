@@ -29,6 +29,8 @@
 #include "__sequence.hpp"
 #include "__utility.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __starts_on
@@ -155,3 +157,5 @@ namespace STDEXEC
     };
   };
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

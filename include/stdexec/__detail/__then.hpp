@@ -26,7 +26,8 @@
 #include "__senders.hpp"
 #include "__transform_completion_signatures.hpp"
 
-// include these after __execution_fwd.hpp
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -109,3 +110,5 @@ namespace STDEXEC
   struct __sexpr_impl<then_t> : __then::__then_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

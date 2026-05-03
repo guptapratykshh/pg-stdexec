@@ -29,6 +29,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -202,3 +204,5 @@ namespace STDEXEC
   struct __sexpr_impl<__stop_when_t> : __stop_when_::__stop_when_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

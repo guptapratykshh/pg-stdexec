@@ -26,6 +26,8 @@
 #include <cstddef>
 #include <type_traits>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   //! Convenience metafunction getting the dependent type `__t` out of `_Tp`.
@@ -1018,3 +1020,5 @@ namespace STDEXEC
                                         __detail::__msort_impl(std::array{__mtypeid<_Ts>...})>::__t;
   };
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

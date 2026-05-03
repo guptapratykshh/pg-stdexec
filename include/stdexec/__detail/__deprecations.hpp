@@ -17,6 +17,8 @@
 
 #include "__execution_fwd.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   using execute_may_block_caller_t [[deprecated]] = __execute_may_block_caller_t;
@@ -85,3 +87,5 @@ namespace STDEXEC
   [[deprecated]]
   inline constexpr exec::__execute_t const & execute = exec::__execute;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

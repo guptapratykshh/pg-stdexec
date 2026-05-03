@@ -35,6 +35,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
 
@@ -827,3 +829,5 @@ namespace STDEXEC
   struct __sexpr_impl<spawn_future_t> : __spawn_future::__spawn_future_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

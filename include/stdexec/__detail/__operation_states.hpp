@@ -23,6 +23,8 @@
 
 #include <type_traits>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   // operation state tag type
@@ -65,3 +67,5 @@ namespace STDEXEC
   concept operation_state = __std::destructible<_Op> && std::is_object_v<_Op>
                          && requires(_Op &__op) { STDEXEC::start(__op); };
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

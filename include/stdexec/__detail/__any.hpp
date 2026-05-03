@@ -33,7 +33,8 @@
 #include <type_traits>
 #include <utility>
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wredundant-consteval-if")
 STDEXEC_PRAGMA_IGNORE_GNU("-Warray-bounds")
 
@@ -2179,4 +2180,4 @@ namespace STDEXEC::__any
 
 // NOLINTEND(moderize-use-override)
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

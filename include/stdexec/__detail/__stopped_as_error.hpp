@@ -24,6 +24,8 @@
 #include "__sender_adaptor_closure.hpp"
 #include "__senders.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -49,3 +51,5 @@ namespace STDEXEC
 
   inline constexpr stopped_as_error_t stopped_as_error{};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

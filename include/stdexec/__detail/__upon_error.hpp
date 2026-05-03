@@ -25,7 +25,8 @@
 #include "__senders.hpp"  // IWYU pragma: keep for __well_formed_sender
 #include "__transform_completion_signatures.hpp"
 
-// include these after __execution_fwd.hpp
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -95,3 +96,5 @@ namespace STDEXEC
   struct __sexpr_impl<upon_error_t> : __upon_error::__upon_error_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

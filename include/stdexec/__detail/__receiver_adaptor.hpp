@@ -21,6 +21,8 @@
 #include "__receivers.hpp"
 #include "__type_traits.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __adaptors
@@ -182,3 +184,5 @@ namespace STDEXEC
                                       "instead")]]
   = __receiver_adaptor<_Derived, _Base>;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

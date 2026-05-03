@@ -54,7 +54,8 @@
 #  define STDEXEC_TASK_BULK_SCHEDULE_OPSTATE_ALIGN 8
 #endif
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Warray-bounds")
 
 namespace STDEXEC
@@ -871,4 +872,4 @@ namespace STDEXEC
   }  // namespace __detail
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

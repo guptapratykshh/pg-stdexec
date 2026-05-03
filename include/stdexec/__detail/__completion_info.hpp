@@ -31,6 +31,8 @@
 #include <compare>
 // IWYU pragma: end_keep
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   template <class _Sig>
@@ -149,3 +151,5 @@ namespace STDEXEC
     }
   }  // namespace __cmplsigs
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

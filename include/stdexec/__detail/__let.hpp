@@ -35,6 +35,8 @@
 
 #include <exception>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   //////////////////////////////////////////////////////////////////////////////
@@ -708,3 +710,5 @@ namespace STDEXEC
   struct __sexpr_impl<let_stopped_t> : __let::__impls<let_stopped_t>
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

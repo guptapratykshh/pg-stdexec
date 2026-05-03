@@ -40,6 +40,8 @@
 #include <thread>
 #include <utility>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC::__parallel_scheduler_default_impl
 {
   using parallel_scheduler_replacement::__parallel_scheduler_backend_factory_t;
@@ -400,3 +402,5 @@ namespace STDEXEC::__parallel_scheduler_default_impl
     __parallel_scheduler_backend_singleton{};
 
 }  // namespace STDEXEC::__parallel_scheduler_default_impl
+
+#include "__epilogue.hpp"

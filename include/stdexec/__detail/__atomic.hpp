@@ -28,7 +28,8 @@
 
 #include <memory>
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wdeprecated-declarations")
 STDEXEC_PRAGMA_IGNORE_EDG(deprecated_entity)
 STDEXEC_PRAGMA_IGNORE_MSVC(4996)  // 'foo': was declared deprecated
@@ -244,4 +245,4 @@ namespace STDEXEC::__std
 
 }  // namespace STDEXEC::__std
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

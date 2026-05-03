@@ -34,6 +34,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   struct _JOINING_A_COUNTING_SCOPE_NEEDS_A_SCHEDULER_IN_THE_ENVIRONMENT_
@@ -866,3 +868,5 @@ namespace STDEXEC
     }
   };
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

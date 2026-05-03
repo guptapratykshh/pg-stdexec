@@ -30,7 +30,8 @@
 #include <memory>
 #include <utility>
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wmismatched-new-delete")
 
 namespace STDEXEC
@@ -758,4 +759,4 @@ namespace STDEXEC
 #endif  // !STDEXEC_NO_STDCPP_COROUTINES()
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"
