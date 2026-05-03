@@ -22,6 +22,8 @@
 #include <iterator>
 #include <utility>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __slist
@@ -171,3 +173,5 @@ namespace STDEXEC
   using __slist::__intrusive_slist;
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

@@ -26,6 +26,8 @@
 
 #include <exception>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -74,3 +76,5 @@ namespace STDEXEC
     { __token.wrap(__declval<__scope_concepts::__test_sender>()) } -> sender_in<STDEXEC::env<>>;
   };
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

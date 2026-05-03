@@ -25,6 +25,8 @@
 
 #include "stdexec/__detail/__config.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   template <auto _Ptr>
@@ -104,3 +106,5 @@ namespace STDEXEC
   };
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

@@ -21,6 +21,8 @@
 #include <type_traits>  // IWYU pragma: export
 #include <utility>      // IWYU pragma: keep
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
 
@@ -170,3 +172,5 @@ namespace STDEXEC
   using __mfalse = __mbool<false>;
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

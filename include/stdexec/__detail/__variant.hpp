@@ -32,7 +32,8 @@
 /* the need for a default constructor for each alternative type.                */
 /********************************************************************************/
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wmissing-braces")
 
 namespace STDEXEC
@@ -385,4 +386,4 @@ namespace STDEXEC
   using __uniqued_variant = __mcall<__munique<__qq<__variant>>, __decay_t<Ts>...>;
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

@@ -32,6 +32,8 @@
 #include <exception>
 #include <optional>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -155,3 +157,5 @@ namespace STDEXEC
   struct __sexpr_impl<stopped_as_optional_t> : __sao::__stopped_as_optional_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

@@ -25,6 +25,8 @@
 
 #include <type_traits>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   // [exec.queries.queryable]
@@ -174,3 +176,5 @@ STDEXEC_P2300_NAMESPACE_BEGIN()
 
   inline constexpr forwarding_query_t forwarding_query{};
 STDEXEC_P2300_NAMESPACE_END()
+
+#include "__epilogue.hpp"

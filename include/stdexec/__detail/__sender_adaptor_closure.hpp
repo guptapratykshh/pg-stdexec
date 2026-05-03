@@ -22,6 +22,8 @@
 #include "__tuple.hpp"
 #include "__type_traits.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   template <class _Tp>
@@ -124,3 +126,5 @@ namespace STDEXEC
   template <class _Fn, class... _As>
   STDEXEC_HOST_DEVICE_DEDUCTION_GUIDE __closure(_Fn, _As...) -> __closure<_Fn, _As...>;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

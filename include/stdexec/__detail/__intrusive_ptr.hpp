@@ -27,6 +27,8 @@
 #  include <sanitizer/tsan_interface.h>
 #endif
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __ptr
@@ -375,3 +377,5 @@ namespace STDEXEC
   inline constexpr __ptr::__make_intrusive_t<_Ty, _ReservedBits> __make_intrusive{};
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

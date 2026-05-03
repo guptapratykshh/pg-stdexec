@@ -28,7 +28,8 @@
 
 #include <exception>
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wsubobject-linkage")
 
 namespace STDEXEC
@@ -534,4 +535,4 @@ namespace STDEXEC
   inline constexpr __connect_awaitable_t __connect_awaitable{};
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

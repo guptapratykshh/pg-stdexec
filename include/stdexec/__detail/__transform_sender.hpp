@@ -23,7 +23,8 @@
 #include "__meta.hpp"
 #include "__type_traits.hpp"
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_EDG(type_qualifiers_ignored_on_reference)
 
 namespace STDEXEC
@@ -200,4 +201,4 @@ namespace STDEXEC
                 _Scheduler>;
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

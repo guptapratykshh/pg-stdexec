@@ -21,6 +21,8 @@
 #  include <execution>  // IWYU pragma: keep
 #endif
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
 
@@ -98,3 +100,5 @@ namespace STDEXEC
 #endif
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

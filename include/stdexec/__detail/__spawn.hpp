@@ -31,6 +31,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -192,3 +194,5 @@ namespace STDEXEC
 
   inline constexpr spawn_t spawn{};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

@@ -22,6 +22,8 @@
 #include <new>
 #include <type_traits>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   //! Holds storage for a `_Ty`, but allows clients to `__construct(...)`, `__destry()`,
@@ -173,3 +175,5 @@ namespace STDEXEC
     }
   };
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

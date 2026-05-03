@@ -31,6 +31,8 @@
 #  include <type_traits>
 #endif
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,3 +331,5 @@ namespace STDEXEC
     && __std::copy_constructible<_Alloc>  //
     && __std::equality_comparable<_Alloc>;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

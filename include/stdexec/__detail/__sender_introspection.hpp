@@ -24,7 +24,8 @@
 #include <cstddef>
 #include <exception>  // IWYU pragma: keep for std::terminate
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wc++26-extensions")
 
 namespace STDEXEC
@@ -281,4 +282,4 @@ namespace STDEXEC
                               "<exec/sender_for.hpp> instead") = __sender_for<_Sender, _Tag>;
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

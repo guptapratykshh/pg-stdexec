@@ -22,6 +22,8 @@
 
 #include <exception>  // IWYU pragma: keep for std::exception
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   struct sender_tag;
@@ -455,3 +457,5 @@ namespace STDEXEC
   "'connect'\n"                                                                                    \
   "member function that accepts sync_wait's receiver.\n"                                           \
   STDEXEC_ERROR_CANNOT_CONNECT_SENDER_TO_RECEIVER
+
+#include "__epilogue.hpp"

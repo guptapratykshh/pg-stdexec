@@ -26,6 +26,8 @@
 
 #include <type_traits>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -586,3 +588,5 @@ namespace STDEXEC
 
 #endif  // ^^^ constexpr exceptions ^^^
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

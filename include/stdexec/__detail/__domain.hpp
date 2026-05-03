@@ -26,6 +26,8 @@
 
 #include <type_traits>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __detail
@@ -487,3 +489,5 @@ namespace std
   };
 
 }  // namespace std
+
+#include "__epilogue.hpp"

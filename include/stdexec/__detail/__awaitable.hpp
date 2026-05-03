@@ -20,6 +20,8 @@
 #include "__config.hpp"
 #include "__meta.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
 #if !STDEXEC_NO_STDCPP_COROUTINES()
@@ -108,3 +110,5 @@ namespace STDEXEC
 
 #endif
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

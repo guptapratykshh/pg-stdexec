@@ -23,6 +23,8 @@
 #include "__senders.hpp"
 #include "__type_traits.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __submit
@@ -221,3 +223,5 @@ namespace STDEXEC
   submit_result(_Sender&&, _Receiver) -> submit_result<_Sender, _Receiver>;
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

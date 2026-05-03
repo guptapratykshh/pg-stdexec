@@ -32,6 +32,8 @@
 #include "__utility.hpp"
 #include "__variant.hpp"  // IWYU pragma: keep for __variant
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -437,3 +439,5 @@ namespace STDEXEC
   struct __sexpr_impl<continues_on_t> : __trnsfr::__continues_on_impl
   {};
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

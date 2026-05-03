@@ -15,6 +15,8 @@
  */
 #pragma once
 
+// IWYU pragma: always_keep
+
 #include "__config.hpp"  // IWYU pragma: export
 
 #include "__concepts.hpp"
@@ -22,7 +24,7 @@
 #include "__type_traits.hpp"
 #include "__utility.hpp"
 
-// IWYU pragma: always_keep
+#include "__prologue.hpp"
 
 STDEXEC_NAMESPACE_STD_BEGIN
   struct monostate;
@@ -404,3 +406,5 @@ namespace STDEXEC
   STDEXEC_P2300_DEPRECATED_SYMBOL(std::this_thread::sync_wait_with_variant_t)
   STDEXEC_P2300_DEPRECATED_SYMBOL(std::this_thread::sync_wait_with_variant)
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

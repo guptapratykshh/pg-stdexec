@@ -21,6 +21,8 @@
 #include "__receivers.hpp"
 #include "__schedulers.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   struct __inline_attrs
@@ -85,3 +87,5 @@ namespace STDEXEC
 
   static_assert(__completes_inline<set_value_t, env_of_t<schedule_result_t<inline_scheduler>>>);
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

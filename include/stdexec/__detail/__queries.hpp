@@ -23,6 +23,8 @@
 #include "__config.hpp"
 #include "__query.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,6 +76,8 @@ namespace STDEXEC
   template <class _Sender>
   STDEXEC_HOST_DEVICE_DEDUCTION_GUIDE __sync_attrs(_Sender const &) -> __sync_attrs<_Sender>;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"
 
 STDEXEC_P2300_NAMESPACE_BEGIN()
   //////////////////////////////////////////////////////////////////////////////////

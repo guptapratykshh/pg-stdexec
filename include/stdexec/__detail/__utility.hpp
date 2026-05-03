@@ -26,7 +26,8 @@
 #include <new>      // IWYU pragma: keep for std::launder
 #include <utility>  // IWYU pragma: keep for std::unreachable
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wduplicate-decl-specifier")
 
 namespace STDEXEC
@@ -380,4 +381,4 @@ namespace STDEXEC
   }
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

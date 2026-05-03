@@ -23,7 +23,8 @@
 #include <string_view>
 #include <typeinfo>
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_GNU("-Wunused-private-field")
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -275,4 +276,4 @@ namespace STDEXEC
   static_assert(STDEXEC_IS_SAME(void, __msplice<__mtypeid<void>>));
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

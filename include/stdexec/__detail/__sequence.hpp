@@ -26,7 +26,8 @@
 #include "__transform_completion_signatures.hpp"
 #include "__variant.hpp"
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_EDG(expr_has_no_effect)
 STDEXEC_PRAGMA_IGNORE_EDG(type_qualifiers_ignored_on_reference)
 STDEXEC_PRAGMA_IGNORE_GNU("-Wmissing-braces")
@@ -504,4 +505,4 @@ namespace STDEXEC
   }  // namespace __detail
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

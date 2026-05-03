@@ -20,6 +20,8 @@
 
 #include <type_traits>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   template <class _Fn, class... _Ts>
@@ -115,3 +117,5 @@ namespace STDEXEC
   STDEXEC_HOST_DEVICE_DEDUCTION_GUIDE
   __scope_guard(_Fn, _Ts...) -> __scope_guard<_Fn, std::unwrap_reference_t<_Ts>...>;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

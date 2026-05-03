@@ -21,6 +21,8 @@
 
 #include <memory>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC::parallel_scheduler_replacement
 {
   /// Get the backend for the parallel scheduler.
@@ -43,3 +45,5 @@ namespace STDEXEC::parallel_scheduler_replacement
   auto set_parallel_scheduler_backend(__parallel_scheduler_backend_factory_t __new_factory)
     -> __parallel_scheduler_backend_factory_t;
 }  // namespace STDEXEC::parallel_scheduler_replacement
+
+#include "__epilogue.hpp"

@@ -22,6 +22,8 @@
 // include these after __execution_fwd.hpp
 #include <memory>  // IWYU pragma: export
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   namespace __detail
@@ -124,3 +126,5 @@ namespace STDEXEC
   }
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

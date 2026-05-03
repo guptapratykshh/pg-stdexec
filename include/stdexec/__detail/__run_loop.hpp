@@ -29,6 +29,8 @@
 
 #include <cstddef>
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -403,3 +405,5 @@ namespace STDEXEC
   }
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

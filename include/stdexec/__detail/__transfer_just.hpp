@@ -25,10 +25,11 @@
 #include "__schedulers.hpp"
 #include "__tuple.hpp"
 
+#include "__prologue.hpp"
+
 // Hide transfer_just from Doxygen since it's deprecated and we don't want to document it:
 #if !defined(STDEXEC_DOXYGEN_INVOKED)
 
-STDEXEC_PRAGMA_PUSH()
 STDEXEC_PRAGMA_IGNORE_GNU("-Wmissing-braces")
 
 namespace STDEXEC
@@ -101,6 +102,6 @@ namespace STDEXEC
   };
 }  // namespace STDEXEC
 
-STDEXEC_PRAGMA_POP()
-
 #endif  // STDEXEC_DOXYGEN_INVOKED
+
+#include "__epilogue.hpp"

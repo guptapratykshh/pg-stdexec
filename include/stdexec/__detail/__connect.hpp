@@ -24,6 +24,8 @@
 #include "__transform_sender.hpp"
 #include "__type_traits.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -271,3 +273,5 @@ namespace STDEXEC
                                && __nothrow_callable<connect_t, _Sender, _Receiver>;
 
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

@@ -37,7 +37,8 @@
 #include <tuple>
 #include <variant>
 
-STDEXEC_PRAGMA_PUSH()
+#include "__prologue.hpp"
+
 STDEXEC_PRAGMA_IGNORE_MSVC(4714)  // marked as __forceinline not inlined
 
 namespace STDEXEC::__sync_wait
@@ -374,4 +375,4 @@ STDEXEC_P2300_NAMESPACE_BEGIN(this_thread)
 
 STDEXEC_P2300_NAMESPACE_END(this_thread)
 
-STDEXEC_PRAGMA_POP()
+#include "__epilogue.hpp"

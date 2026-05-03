@@ -22,6 +22,8 @@
   "The use of tag_invoke as a means of customization is deprecated. Please use member functions "  \
   "instead."
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   // [func.tag_invoke], tag_invoke
@@ -118,3 +120,5 @@ namespace STDEXEC
   using tag_t [[deprecated(STDEXEC_TAG_INVOKE_DEPRECATED_MSG)]]
   = __decay_t<decltype(_Tag)>;
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

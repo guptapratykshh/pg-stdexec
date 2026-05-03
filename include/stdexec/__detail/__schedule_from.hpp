@@ -23,6 +23,8 @@
 #include "__queries.hpp"
 #include "__sender_introspection.hpp"
 
+#include "__prologue.hpp"
+
 namespace STDEXEC
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -55,3 +57,5 @@ namespace STDEXEC
     }
   };
 }  // namespace STDEXEC
+
+#include "__epilogue.hpp"

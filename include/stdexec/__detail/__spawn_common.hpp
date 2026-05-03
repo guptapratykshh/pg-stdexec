@@ -23,6 +23,8 @@
 
 #include <memory>
 
+#include "__prologue.hpp"
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // [exec.spawn] paragraph 9
 // [exec.spawn.future] paragraph 15
@@ -91,3 +93,5 @@ namespace STDEXEC::__spawn_common
 
   inline constexpr __choose_senv_fn __choose_senv{};
 }  // namespace STDEXEC::__spawn_common
+
+#include "__epilogue.hpp"

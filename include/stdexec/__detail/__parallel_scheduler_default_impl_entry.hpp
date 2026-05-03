@@ -29,6 +29,8 @@
 
 #include "__parallel_scheduler_default_impl.hpp"  // IWYU pragma: keep
 
+#include "__prologue.hpp"
+
 namespace STDEXEC::parallel_scheduler_replacement
 {
 
@@ -52,3 +54,5 @@ namespace STDEXEC::parallel_scheduler_replacement
       .__set_backend_factory(__new_factory);
   }
 }  // namespace STDEXEC::parallel_scheduler_replacement
+
+#include "__epilogue.hpp"
