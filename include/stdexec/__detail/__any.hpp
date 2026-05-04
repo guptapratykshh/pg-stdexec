@@ -186,7 +186,7 @@ namespace STDEXEC::__any
             class _Base,
             class _BaseInterfaces   = __extends<>,
             size_t _BufferSize      = __default_buffer_size,
-            size_t _BufferAlignment = alignof(std::max_align_t)>
+            size_t _BufferAlignment = alignof(void *)>
   struct __interface_base;
 
   //////////////////////////////////////////////////////////////////////////////////////////
