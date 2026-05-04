@@ -160,15 +160,21 @@ namespace STDEXEC
       }
 
       template <class _Mbr, class _Class, class _Ty, class... _Args>
-        requires __callable<__invoke_fn_t<_Mbr, _Class, _Ty>, _Mbr _Class::*, _Ty, _Args...>
+        requires __callable<__mmangle_t<__invoke_fn_t, _Mbr, _Class, _Ty>,
+                            _Mbr _Class::*,
+                            _Ty,
+                            _Args...>
       STDEXEC_ATTRIBUTE(always_inline, host, device)
-      constexpr auto operator()(_Mbr _Class::*__fun, _Ty &&__ty, _Args &&...__args) const noexcept(
-        __nothrow_callable<__invoke_fn_t<_Mbr, _Class, _Ty>, _Mbr _Class::*, _Ty, _Args...>)
-        -> __call_result_t<
-          __mmangle_t<__invoke_fn_t, _Mbr, _Class, _Ty>,  // to avoid GCC builtin mangling issues
-          _Mbr _Class::*,
-          _Ty,
-          _Args...>
+      constexpr auto operator()(_Mbr _Class::*__fun, _Ty &&__ty, _Args &&...__args) const
+        noexcept(__nothrow_callable<__mmangle_t<__invoke_fn_t, _Mbr, _Class, _Ty>,
+                                    _Mbr _Class::*,
+                                    _Ty,
+                                    _Args...>)
+          -> __call_result_t<
+            __mmangle_t<__invoke_fn_t, _Mbr, _Class, _Ty>,  // to avoid GCC builtin mangling issues
+            _Mbr _Class::*,
+            _Ty,
+            _Args...>
       {
         return __invoke_fn_t<_Mbr, _Class, _Ty>()(__fun,
                                                   static_cast<_Ty &&>(__ty),
