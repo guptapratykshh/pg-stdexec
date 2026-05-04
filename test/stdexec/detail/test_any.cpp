@@ -232,6 +232,19 @@ namespace
     auto y = any::__any_cast<foobar<T>>(pifoo);
   }
 
+  template <class Base>
+  struct iempty : any::__interface_base<iempty, Base, any::__extends<>, 0>
+  {
+    using any::__interface_base<iempty, Base, any::__extends<>, 0>::__interface_base;
+  };
+
+  TEST_CASE("size of any::__any", "[detail][any]")
+  {
+    // apart from the buffer, an empty any should only contain a pointer to the vtable
+    // and a room for the _tagged_ptr to the proxy object.
+    STATIC_REQUIRE(sizeof(any::__any<iempty>) == 2 * sizeof(void *));
+  }
+
   TEMPLATE_TEST_CASE("basic usage of any::__any", "[detail][any]", foobar<Small>, foobar<Big>)
   {
     static constexpr bool is_small = std::same_as<TestType, foobar<Small>>;
