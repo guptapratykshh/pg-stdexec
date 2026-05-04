@@ -38,6 +38,7 @@ jobs:
           - { name: "CPU (gcc 14, Release, ASAN)",   build: "Release", tag: gcc14-cuda12.9,  cxxstd: "20", cxxflags: "-fsanitize=address" }
           - { name: "CPU (gcc 14, Release, LEAK)",   build: "Release", tag: gcc14-cuda12.9,  cxxstd: "20", cxxflags: "-fsanitize=leak", }
           - { name: "CPU (gcc 14, Release, c++23)",  build: "Release", tag: gcc14-cuda12.9,  cxxstd: "23", cxxflags: "", }
+          - { name: "CPU (gcc 15, Release, c++23)",  build: "Release", tag: gcc15-cuda12.9,  cxxstd: "23", cxxflags: "", }
     container:
       options: -u root
       image: rapidsai/devcontainers:26.06-cpp-${{ matrix.tag }}
