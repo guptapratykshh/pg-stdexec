@@ -244,6 +244,17 @@ namespace STDEXEC
        public:
         using scheduler_concept = scheduler_tag;
 
+        // Returns a reference to the parent run_loop. The derived type is
+        // recovered via static_cast from the stored __basic_run_loop pointer.
+        // This is provided so that consumers holding only a `scheduler` can
+        // recover the owning loop without reaching into the schedule
+        // sender's environment for the private __loop_ member.
+        STDEXEC_ATTRIBUTE(nodiscard, host, device)
+        constexpr auto get_run_loop() const noexcept -> _Derived&
+        {
+          return *static_cast<_Derived*>(this->__loop_);
+        }
+
         struct __sndr_t
         {
           using sender_concept = sender_tag;
